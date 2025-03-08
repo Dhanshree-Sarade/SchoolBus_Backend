@@ -14,9 +14,9 @@ public class DriverService {
 	@Autowired
 	private DriverRepository driverRepository;
 	
-	public Driver addDriver(Driver driver) {
-		return driverRepository.save(driver);
-	}
+	 public Driver saveDriver(Driver driver) {
+	        return driverRepository.save(driver);
+	    }
 	
 	public List<Driver> showDriver(){
 		return driverRepository.findAll();
@@ -27,17 +27,18 @@ public class DriverService {
 	}
 	
 	public Driver editDriver(Driver driver) {
-		Driver existingDriver = driverRepository.findById(driver.getDid()).orElse(null);
-		if (existingDriver!=null) {
-			existingDriver.setDriverFirstName(driver.getDriverFirstName());
-			existingDriver.setDriverLastName(driver.getDriverLastName());
-			existingDriver.setDriverEmail(driver.getDriverEmail());
-			existingDriver.setDriverMob(driver.getDriverMob());
-			existingDriver.setDriverPassword(driver.getDriverPassword());
-		}
-		
-		return null;
+	    Driver existingDriver = driverRepository.findById(driver.getDid()).orElse(null);
+	    if (existingDriver != null) {
+	        existingDriver.setDriverFirstName(driver.getDriverFirstName());
+	        existingDriver.setDriverLastName(driver.getDriverLastName());
+	        existingDriver.setDriverEmail(driver.getDriverEmail());
+	        existingDriver.setDriverMob(driver.getDriverMob());
+	        existingDriver.setDriverPassword(driver.getDriverPassword());
+	        return driverRepository.save(existingDriver);  // Save and return the updated driver
+	    }
+	    return null;  // Return null only if the driver does not exist
 	}
+
 	
 	public String deleteDriver(Long did) {
 		driverRepository.deleteById(did);
